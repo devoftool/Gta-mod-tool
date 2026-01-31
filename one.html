@@ -159,7 +159,7 @@ fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
 })
   .then(res => res.json())
   .then(data => {
-    const mods = data.record.one-piece; // Bleach category
+    const mods = data.record.one; // Bleach category
     const container = document.getElementById("modsContainer");
 
     if(!mods || mods.length === 0) {
