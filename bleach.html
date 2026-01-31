@@ -150,16 +150,25 @@ No files are hosted on our servers.</p>
   
 
 
+<h2>Bleach Mods</h2>
 <div id="modsContainer"></div>
 
 <script>
-const BIN_ID = "697dff8143b1c97be95aa6f0";
+const BIN_ID = "697dff8143b1c97be95aa6f0"; // your bin id
+const MASTER_KEY = "$2a$10$tqxMfQSPAPZY9dXG8/3hNesUHvaWqb3WsKL/LXaOdfPK6rEGHIzhK"; // replace with your master key
 
-fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`)
+fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+  headers: { "X-Master-Key": MASTER_KEY }
+})
   .then(res => res.json())
   .then(data => {
-    const mods = data.record.bleach; // change per page: bleach / one-piece / dmc / others
+    const mods = data.record.bleach; // Bleach category
     const container = document.getElementById("modsContainer");
+
+    if(!mods || mods.length === 0) {
+      container.innerHTML = "<p>No mods added yet.</p>";
+      return;
+    }
 
     mods.forEach(m => {
       container.innerHTML += `
@@ -169,10 +178,11 @@ fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`)
         </a><hr>
       `;
     });
+  })
+  .catch(err => {
+    console.log("Error fetching mods:", err);
+    document.getElementById("modsContainer").innerHTML = "<p>Error loading mods.</p>";
   });
-
-
-
 </script>
 
 
