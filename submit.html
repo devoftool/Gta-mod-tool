@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Mod</title>
+<style>
+body { font-family: Arial; padding: 20px; }
+input, select, button { padding: 10px; margin: 5px 0; width: 100%; max-width: 400px; }
+button { cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h2>Submit New Mod</h2>
+
+<input id="name" placeholder="Mod Name">
+<input id="link" placeholder="Google Drive Link">
+<select id="category">
+  <option value="bleach">Bleach</option>
+  <option value="one-piece">One Piece</option>
+  <option value="dmc">DMC</option>
+  <option value="others">Others</option>
+</select>
+<button onclick="addMod()">Submit</button>
+
+<script>
+const BIN_ID = "697dff8143b1c97be95aa6f0"; // jsonbin.io bin id
+const MASTER_KEY = "$2a$10$tqxMfQSPAPZY9dXG8/3hNesUHvaWqb3WsKL/LXaOdfPK6rEGHIzhK"; // X-Master-Key
+
+async function addMod() {
+  const name = document.getElementById("name").value.trim();
+  const link = document.getElementById("link").value.trim();
+  const category = document.getElementById("category").value;
+
+  if(!name || !link) return alert("Both fields are required!");
+
+  // 1️⃣ Fetch existing JSON
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+    headers: { "X-Master-Key": MASTER_KEY }
+  });
+  const data = await res.json();
+  const json = data.record;
+
+  // 2️⃣ Add new mod
+  if(!json[category]) json[category] = [];
+  json[category].push({ name, link });
+
+  // 3️⃣ Update bin
+  await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Master-Key": MASTER_KEY
+    },
+    body: JSON.stringify(json)
+  });
+
+  alert("Mod added successfully ✅");
+
+  // Clear inputs
+  document.getElementById("name").value = "";
+  document.getElementById("link").value = "";
+}
+</script>
+
+</body>
+</html>
