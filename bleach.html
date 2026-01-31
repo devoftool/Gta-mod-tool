@@ -153,24 +153,7 @@ No files are hosted on our servers.</p>
 <div id="modsContainer"></div>
 
 <script>
-fetch("mods.json")
-  .then(r => r.json())
-  .then(data => {
-    const mods = data.bleach;
-    const c = document.getElementById("modsContainer");
-
-    mods.forEach(m => {
-      c.innerHTML += `
-        <p class="links">${m.name}</p>
-        <a class="d" href="${m.link}" target="_blank">
-          <button class="do">Open in Google Drive</button>
-        </a><hr>
-      `;
-    });
-  });
-  
-  
-  const BIN_ID = "697dff8143b1c97be95aa6f0";
+const BIN_ID = "697dff8143b1c97be95aa6f0";
 
 fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`)
   .then(res => res.json())
