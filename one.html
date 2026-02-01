@@ -97,34 +97,6 @@ No files are hosted on our servers.</p>
       
       
       
-      <p class="links"><a class="links" href="">shank mod by tenberis</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1IE0vClpndDhCtYN4DoXBBJ4meeJZzMhj/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><button class="do">Open in Google Drive</button></a><hr>
-      
-      
-      
-      <p class="links"><a class="links" href="">luffy gear 4 mod</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1CTCa5AHlvE6Ln0lK9ecVLFjObcfffnTk/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links" href="">kizaru by akop</a></p>
-      <a class="d" href="https://drive.google.com/file/d/138uB5dRsHDOSIAzltj_yB3zGzDT5__-X/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">law by akop</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1GnWIp_sTD6l0UrmNfGQVOx8qrf8E1YPl/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">kurohige by zenjinx</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1ILMrZDQBPgAsnvcPSSl5qNo5zbOlzBvI/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">zoro by kg</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1JBpNnCItbtpp34R4cZZeqFi7Gf5KFufb/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">kuzan 11 skill by akop</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1_JOTvo-K3BkcB4o-uQtHGjJxlwyOwNR8/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">shank map by akop</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1lfaVPClCLpnmDgPLo1Wj8F4yX_KTGA5k/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">pvt kaido map</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1Gu9d5sH-5fdmOBGKeDyaf4YBZmK50cq0/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
       
       
     </div>
@@ -150,37 +122,38 @@ No files are hosted on our servers.</p>
   
   
   </div>
-  <script>
-const BIN_ID = "697dff8143b1c97be95aa6f0"; // your bin id
-const MASTER_KEY = "$2a$10$tqxMfQSPAPZY9dXG8/3hNesUHvaWqb3WsKL/LXaOdfPK6rEGHIzhK"; // replace with your master key
+  
 
-fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-  headers: { "X-Master-Key": MASTER_KEY }
-})
-  .then(res => res.json())
-  .then(data => {
-    const mods = data.record.one; // Bleach category
-    const container = document.getElementById("modsContainer");
+<script>
+const FOLDER_ID = "1pwCTYUIPtHrnRhcUVlSKZhyangXvLEbV"; // bleach folder
+const API_KEY = "AIzaSyCO4fkmR0fTEhBMYWOwZo3T5tklRai8zNg";
 
-    if(!mods || mods.length === 0) {
-      container.innerHTML = "<p>No mods added yet.</p>";
-      return;
-    }
+fetch(
+  `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&fields=files(id,name,webViewLink)&key=${API_KEY}`
+)
+.then(res => res.json())
+.then(data => {
+  const container = document.getElementById("modsContainer");
 
-    mods.forEach(m => {
-      container.innerHTML += `
-        <p class="links">${m.name}</p>
-        <a class="d" href="${m.link}" target="_blank">
-          <button class="do">Open in Google Drive</button>
-        </a><hr>
-      `;
-    });
-  })
-  .catch(err => {
-    console.log("Error fetching mods:", err);
-    document.getElementById("modsContainer").innerHTML = "<p>Error loading mods.</p>";
+  if (!data.files || data.files.length === 0) {
+    container.innerHTML = "<p>No mods found</p>";
+    return;
+  }
+
+  data.files.forEach(file => {
+    container.innerHTML += `
+      <p class="links">${file.name}</p>
+      <a class="d" href="${file.webViewLink}" target="_blank">
+        <button class="do">Open in Google Drive</button>
+      </a>
+      <hr>
+    `;
   });
-  </script>
+})
+.catch(err => {
+  console.error(err);
+});
+</script>
 </body>
 
 </html>
