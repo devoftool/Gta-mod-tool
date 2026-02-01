@@ -96,44 +96,6 @@ No files are hosted on our servers.</p>
       
       
       
-      <p class="links"><a class="links" href="">Dio by kaito</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1fT9CdN6UUzUtnrercUu70eAovk7roccJ/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><button class="do">Open in Google Drive</button></a><hr>
-      
-      
-      
-      <p class="links"><a class="links" href="">Jotaro by shinxdark</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1HULAEzpjlV4bIL4TT5d-bBRu2WrMALEY/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links" href="">jotaro by kg</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1HjMeEU07f8AXHb2gQhxjO8OHxBzwlJFR/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">killer queen by tenbris</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1BnIIknFWy2-e1yvOFmQQz2fxNYjLnK3k/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">jotaro by zenjinx</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1GXpPlN9b2gyvbZpaRyCiOz0KLR4YPZH3/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">dio-x-heaven by kikiyege</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1HAxxq_jgofmRlv09BDwbmqVZ7y1Imwlj/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">pvt made in heaven stand skin</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1QPZJ2fjG-2cpz2DyapkUguzY8mqgveBG/view?usp=drivesdk"><button class="do">open in drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">pvt tusk skin</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1QUqzVXFeSrTfyk_JA9RUVB648G41I7PZ/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      <p class="links"><a class="links"href="">pvt shadow dio skin</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1IOWLQ_z8Zj2370xMA2u_Lre5reMQ5QoC/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-        <p class="links"><a class="links"href="">Dio road-roller by tenberis</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1HO45DX8jQ6b0tiuadvPM3J2V7oQfrBa8/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-        <p class="links"><a class="links"href="">dio world over heaven by tenberis</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1G_vvXKRpFHHvWJhyEjZE-SU60ieS3Fzh/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
-      
-      
-        <p class="links"><a class="links"href="">Diavalo mod by kaito</a></p>
-      <a class="d" href="https://drive.google.com/file/d/1HSkbyVs_vkUYxoKrDYaQrkn-X40xXQM9/view?usp=drivesdk"><button class="do">Open in Google Drive</button></a><hr>
       
      
     </div>
@@ -158,37 +120,38 @@ No files are hosted on our servers.</p>
   
   
   </div>
-  <script>
-const BIN_ID = "697dff8143b1c97be95aa6f0"; // your bin id
-const MASTER_KEY = "$2a$10$tqxMfQSPAPZY9dXG8/3hNesUHvaWqb3WsKL/LXaOdfPK6rEGHIzhK"; // replace with your master key
+  
 
-fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-  headers: { "X-Master-Key": MASTER_KEY }
-})
-  .then(res => res.json())
-  .then(data => {
-    const mods = data.record.jojo; // Bleach category
-    const container = document.getElementById("modsContainer");
+<script>
+const FOLDER_ID = "17DNkCeJBzzMasarE4zx5TSGIZF9g8ktl"; // bleach folder
+const API_KEY = "AIzaSyCO4fkmR0fTEhBMYWOwZo3T5tklRai8zNg";
 
-    if(!mods || mods.length === 0) {
-      container.innerHTML = "<p>No mods added yet.</p>";
-      return;
-    }
+fetch(
+  `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&fields=files(id,name,webViewLink)&key=${API_KEY}`
+)
+.then(res => res.json())
+.then(data => {
+  const container = document.getElementById("modsContainer");
 
-    mods.forEach(m => {
-      container.innerHTML += `
-        <p class="links">${m.name}</p>
-        <a class="d" href="${m.link}" target="_blank">
-          <button class="do">Open in Google Drive</button>
-        </a><hr>
-      `;
-    });
-  })
-  .catch(err => {
-    console.log("Error fetching mods:", err);
-    document.getElementById("modsContainer").innerHTML = "<p>Error loading mods.</p>";
+  if (!data.files || data.files.length === 0) {
+    container.innerHTML = "<p>No mods found</p>";
+    return;
+  }
+
+  data.files.forEach(file => {
+    container.innerHTML += `
+      <p class="links">${file.name}</p>
+      <a class="d" href="${file.webViewLink}" target="_blank">
+        <button class="do">Open in Google Drive</button>
+      </a>
+      <hr>
+    `;
   });
-  </script>
+})
+.catch(err => {
+  console.error(err);
+});
+</script>
   
 </body>
 
