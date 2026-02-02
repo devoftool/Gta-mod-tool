@@ -130,7 +130,7 @@ fetch("https://auto.h208698.workers.dev/others")
 
     data.files.forEach(mod => {
       container.innerHTML += `
-        <p class="links">${mod.name}</p>
+        <p class="links">${mod.name}- ${sizeKB}</p>
         <a href="${mod.webViewLink}" target="_blank">
           <button class="do">Open in Google Drive</button>
         </a>
