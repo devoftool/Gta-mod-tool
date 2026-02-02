@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+    <style>
+  body{
+    background:black;
+  }
+  .main{
+    width:220;
+  }
+  .banner{
+    width:100%;
+    
+  }
+  .links{
+    margin:0;
+    display: inline-block;
+    color:white;
+    text-decoration: none;
+    text-align
+    margin-left:6px;
+    margin-top:4px;
+    margin-bottom:4px;
+  }
+  .dev{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+  }
+  
+  .show{
+    margin-left:20px;
+    vertical-align: center;
+  }
+  
+  .d{
+    margin:0;
+    display: inline-block;
+    margin-left:7px;
+  }
+  .do{
+    border-radius:40px;
+    border:none;
+    background-color: #349beb;
+    color:white;
+    
+  }
+  .do:active{
+    padding:5px;
+  }
+  
+  .credit{
+    text-align: center;
+    text-decoration: none;
+    color: yellow;
+  }
+  .secure{
+    text-align: center;
+    font-size: 15px;
+    opacity: 0.5;
+  }
+  .site-footer {
+  background: #000;
+  color: #aaa;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 14px;
+  border-top: 1px solid #222;
+}
+
+.site-footer a {
+  color: #4da6ff;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+  
+    
+  </style>
+  <div class="main">
+    <img class="banner" src="others.jpg">
+    <div class="links">
+      <p class="credit">All rights belong to original creator.</p>
+      <p class="dev">Fs mods collection</p>
+      <p class="secure"> This website only indexes publicly available mods.
+No files are hosted on our servers.</p>
+      
+      
+      
+      
+    </div>
+    <div id="modsContainer"></div>
+  
+  <footer class="site-footer">
+  <p>
+    This website does not host any files. All mods are indexed from publicly available sources.
+  </p>
+  <p>
+    All rights belong to original creators.
+  </p>
+  <p>
+    DMCA / Contact: 
+    <a href="mailto:h208698@gmail.com">h208698@gmail.com</a>
+  </p>
+</footer>
+  
+  
+  
+  
+  
+  
+  </div>
+
+  
+
+<script>
+fetch("https://auto.h208698.workers.dev/others")
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("modsContainer");
+
+    data.files.forEach(mod => {
+      container.innerHTML += `
+        <p class="links">${mod.name}</p>
+        <a href="${mod.webViewLink}" target="_blank">
+          <button class="do">Open in Google Drive</button>
+        </a>
+        <hr>
+      `;
+    });
+  })
+  .catch(err => console.log("Error loading mods:", err));
+</script>
+  
+</body>
+
+</html>
