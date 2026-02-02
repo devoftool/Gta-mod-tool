@@ -129,16 +129,17 @@ fetch("https://auto.h208698.workers.dev/others")
     const container = document.getElementById("modsContainer");
 
     data.files.forEach(mod => {
+      const sizeKB = mod.size ? (mod.size / 1024).toFixed(2) + " KB" : "N/A";
       container.innerHTML += `
-        <p class="links">${mod.name}- ${sizeKB}</p>
+        <p class="links">${mod.name} - ${sizeKB}</p>
         <a href="${mod.webViewLink}" target="_blank">
-          <button class="do">Open in Google Drive</button>
+          <button>Open in Google Drive</button>
         </a>
         <hr>
       `;
     });
   })
-  .catch(err => console.log("Error loading mods:", err));
+  .catch(err => console.log("Error:", err));
 </script>
   
 </body>
