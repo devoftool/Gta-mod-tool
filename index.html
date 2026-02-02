@@ -273,6 +273,8 @@
     }
   </style>
 
+  <input id="searchBox" placeholder="Search mod..." />
+<div id="results"></div>
   <!-- Loader / Animation -->
   <div id="loader">
     <div id="lottie" style="width:300px; height:300px;"></div>
@@ -381,6 +383,62 @@
       document.getElementById('mainContent').style.display = 'block';
       document.body.classList.remove('loading');
     });
+
+    const WORKER = "https://auto.h208698.workers.dev";
+
+const categories = {
+  bleach: "bleach.html",
+  dmc: "dmc.html",
+  jojo: "jojo.html",
+  one: "onepiece.html",
+  others: "others.html"
+};
+
+let allMods = [];
+
+// Fetch all categories
+async function loadAll() {
+  for (let cat in categories) {
+    try {
+      const res = await fetch(`${WORKER}/${cat}`);
+      const data = await res.json();
+
+      data.files.forEach(f => {
+        allMods.push({
+          name: f.name,
+          link: categories[cat],
+          category: cat
+        });
+      });
+
+    } catch (e) {
+      console.log("Fail:", cat);
+    }
+  }
+}
+loadAll();
+
+// Search
+document.getElementById("searchBox").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase();
+  const box = document.getElementById("results");
+  box.innerHTML = "";
+
+  if (q.length < 2) return;
+
+  allMods
+    .filter(m => m.name.toLowerCase().includes(q))
+    .slice(0, 15)
+    .forEach(m => {
+      box.innerHTML += `
+        <div onclick="location.href='${m.link}'">
+          ${m.name} <small>(${m.category})</small>
+        </div>
+      `;
+    });
+});
+  
+  
   </script>
 
 </body>
