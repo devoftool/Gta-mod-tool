@@ -273,8 +273,12 @@
     }
   </style>
 
-  <input id="searchBox" placeholder="Search mod..." />
-<div id="results"></div>
+  <input 
+  type="text" 
+  id="searchInput" 
+  placeholder="Search mods..." 
+  oninput="searchMods()"
+/>
   <!-- Loader / Animation -->
   <div id="loader">
     <div id="lottie" style="width:300px; height:300px;"></div>
@@ -384,7 +388,7 @@
       document.body.classList.remove('loading');
     });
 
-    const WORKER = "https://auto.h208698.workers.dev/bleach";
+    const WORKER = "https://auto.h208698.workers.dev";
 
 const categories = {
   bleach: "bleach.html",
